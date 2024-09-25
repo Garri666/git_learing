@@ -1,1 +1,80 @@
-测试Git上传
+测试Git上传步骤：
+
+1.    先在D盘创建文件夹D:/testgit
+2.    运行git bash进入到工作文件夹：
+
+	进入testgit文件夹
+	Administrator@USER-20221121VK MINGW64 ~/git-learning (main)
+	$ cd /d/testgit
+
+	查看当前文件路径
+	Administrator@USER-20221121VK MINGW64 /d/testgit
+	$ pwd
+	/d/testgit
+
+3.    在文件夹中创建文本文件testgit.txt
+4.    创建本地仓库
+
+	在本文件夹创建仓库，生成.git文件夹
+	Administrator@USER-20221121VK MINGW64 /d/testgit
+	$ git init
+	Initialized empty Git repository in D:/testgit/.git/
+
+	将文件夹中文件加入缓存区供git管理
+	Administrator@USER-20221121VK MINGW64 /d/testgit (master)
+	$ git add .
+
+	提交版本申请，主分支master生成
+	Administrator@USER-20221121VK MINGW64 /d/testgit (master)
+	$ git commit -m "fist txt file"
+	[master (root-commit) 0cad8d1] fist txt file
+	 1 file changed, 1 insertion(+)
+	 create mode 100644 testgit.txt
+
+	修改主分支名称从master变为main
+	Administrator@USER-20221121VK MINGW64 /d/testgit (master)
+	$ git branch -M main
+
+	增加远程仓库链接，并命名为origin
+	Administrator@USER-20221121VK MINGW64 /d/testgit (main)
+	$ git remote add origin git@github.com:Garri666/git_learing.git
+
+	链接远程仓库，并同步本地仓文件到远程仓
+	Administrator@USER-20221121VK MINGW64 /d/testgit (main)
+	$ git push -u origin main
+	To github.com:Garri666/git_learing.git
+	 ! [rejected]        main -> main (fetch first)
+	error: failed to push some refs to 'github.com:Garri666/git_learing.git'
+	hint: Updates were rejected because the remote contains work that you do not
+	hint: have locally. This is usually caused by another repository pushing to
+	hint: the same ref. If you want to integrate the remote changes, use
+	hint: 'git pull' before pushing again.
+	hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+5.    如果远程仓为空，到步骤4完成，但由于远程仓中原来有文件，同步出错，需要回读同步远程仓
+
+	从远程仓回读到本地仓
+	Administrator@USER-20221121VK MINGW64 /d/testgit (main)
+	$ git pull --rebase origin main
+	remote: Enumerating objects: 3, done.
+	remote: Counting objects: 100% (3/3), done.
+	remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0 (from 0)
+	Unpacking objects: 100% (3/3), 204 bytes | 0 bytes/s, done.
+	From github.com:Garri666/git_learing
+	 * branch            main       -> FETCH_HEAD
+	 * [new branch]      main       -> origin/main
+	Successfully rebased and updated refs/heads/main.
+
+	重新同步远程仓库
+	Administrator@USER-20221121VK MINGW64 /d/testgit (main)
+	$ git push -u origin main
+	Enumerating objects: 4, done.
+	Counting objects: 100% (4/4), done.
+	Delta compression using up to 8 threads
+	Compressing objects: 100% (2/2), done.
+	Writing objects: 100% (3/3), 287 bytes | 287.00 KiB/s, done.
+	Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+	To github.com:Garri666/git_learing.git
+	   719f28e..8f09261  main -> main
+	branch 'main' set up to track 'origin/main'.
+
